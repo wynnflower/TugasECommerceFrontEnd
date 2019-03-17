@@ -31,6 +31,7 @@ class History extends React.Component{
                         <td>{val.nama}</td>
                         <td>{val.harga}</td>
                         <td>{val.qty}</td>
+                        <td>{val.tglbeli}</td>
                     </tr>
                 ) 
             }
@@ -49,6 +50,8 @@ class History extends React.Component{
                                     <th scope="col">Produk</th>
                                     <th scope="col">Harga</th>
                                     <th scope="col">Qty</th>
+                                    <th scope="col">Tanggal</th>
+
                                 </tr>
                             </thead>
                             <tbody>

@@ -28,7 +28,7 @@ class Cart extends React.Component{
         //var nama=this.props.nama
         var allCart=this.state.cart
         console.log(allCart[0])
-        alert(allCart[0])
+        //alert(allCart[0])
         // Axios.get(urlApi+'/history?username='+nama)
         // .then((res)=>{
         //     console.log(res)
@@ -38,7 +38,10 @@ class Cart extends React.Component{
                 var harga=allCart[i].harga
                 var link=allCart[i].link
                 var qty=allCart[i].qty
-                var neoData={username:username,nama:nama,harga:harga,link:link,qty:qty}
+                var date=new Date()
+                var tglbeli=date.getTime()
+                tglbeli=new Date(tglbeli)
+                var neoData={username:username,nama:nama,harga:harga,link:link,qty:qty,tglbeli:tglbeli}
                 Axios.post(urlApi+'/history',neoData)
                 .then((res)=>{
                     console.log(res) 
@@ -53,8 +56,8 @@ class Cart extends React.Component{
                 Axios.delete(urlApi+'/cart/'+allCart[i].id)
                 .then((res)=>{
                     console.log(res) 
-                    swal({title: "Hapus Cart!",
-                    text: "Hapus Cart Success",
+                    swal({title: "Checkout!",
+                    text: "Checkout Success",
                     icon: "success",
                     button: "OK"})
                     this.setState({cart:[]})

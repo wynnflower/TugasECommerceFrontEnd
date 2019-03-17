@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import './../support/css/product.css'
 
 class Product extends React.Component{
-    state={listProduct:[]}
+    state={listProduct:[],page:1}
     constructor(props) {
         super(props);
         this.handleScroll = this.handleScroll.bind(this);
@@ -20,11 +20,21 @@ class Product extends React.Component{
       };
       
       handleScroll(event) {
-        console.log('the scroll things', event)
+        //console.log('the scroll things', event)
+        //console.log(window.scrollY)
+        var hal=Math.floor((window.scrollY/300)-4)
+        if(hal>1){
+            hal=hal+1
+            console.log(hal)
+            this.setState({page:hal})
+            //alert(this.state.page)
+            this.getProduct()
+        }
       };
     
     getProduct=()=>{
-        Axios.get('http://localhost:2000/product')
+        var items=this.state.page * 8
+        Axios.get('http://localhost:2000/product?_page=1&_limit='+items)
         .then((res)=>{
             this.setState({listProduct:res.data})
             //alert(res.data[0].nama)

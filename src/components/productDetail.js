@@ -2,6 +2,8 @@ import React from 'react'
 import Axios from 'axios';
 import {connect} from 'react-redux'
 import { urlApi } from '../support/urlAPI';
+import { Link } from 'react-router-dom';
+import swal from 'sweetalert';
 
 class ProductDetail extends React.Component{
     state={product:{},proteksiJml:""}
@@ -30,7 +32,13 @@ class ProductDetail extends React.Component{
     addToCart=()=>{
         var username=this.props.nama
         var nama = this.state.product.nama
-        var harga=parseInt(this.state.product.harga)
+        //alert(this.state.product.diskon>0)
+        var harga=parseInt(this.state.product.harga)  
+        if(this.state.product.diskon > 0){
+           var harga=parseInt(this.state.product.harga -(this.state.product.harga*this.state.product.diskon/100)) 
+        }
+        
+        //alert(harga)
         var link=this.state.product.link
         var qty=parseInt(this.refs.jumlah.value)
         var newData={username:username,nama:nama,harga:harga,link:link,qty:qty}
@@ -50,17 +58,25 @@ class ProductDetail extends React.Component{
                 Axios.put(urlApi+'/cart/'+res.data[0].id,newData)
                 .then((res)=>{
                     console.log(res)
+                    swal({title: "Add to Cart!",
+                    text: "Add to Cart Success",
+                    icon: "success",
+                    button: "OK"})
                     //alert("Add to Cart Sukses (Update Lama)")
                 })
                 .catch((err)=>{
                     console.log(err)
                 })
             }else{
-                alert(res.data.length)
+                //alert(res.data.length)
                 Axios.post('http://localhost:2000/cart',newData)
                 .then((res)=>{
                     console.log(res)
                     //alert("Add to Cart Sukses (Data Baru)")
+                    swal({title: "Add to Cart!",
+                    text: "Add to Cart Success",
+                    icon: "success",
+                    button: "OK"})
                 })
                 .catch((err)=>{
                     console.log(err)
@@ -114,9 +130,12 @@ class ProductDetail extends React.Component{
                         {
                             this.props.nama===""?
                             <div className="row mt-3">
-                            <input type="button" disabled className ="btn border-secondary col-md-2 disabled" value="Add to Wishlist"/>
-                            <input type="button" disabled className ="btn border-secondary col-md-3 disabled" value="Beli Sekarang"/>
-                            <input type="button" disabled className ="btn border-secondary col-md-3 disabled" value="Add to Cart"/>
+                            <Link to="/login" style={{width:'100%'}}>
+                            <input type="button" className ="btn btn-outline-secondary col-md-2" value="Add to Wishlist"/>
+                            <input type="button" className ="btn btn-outline-danger col-md-3" value="Beli Sekarang"/>
+                            
+                            <input type="button" className ="btn btn-outline-primary col-md-3" value="Add to Cart"/>
+                            </Link>
                         </div>
                             : this.state.proteksiJml !==""?
                             <div className="row mt-3">
@@ -126,9 +145,9 @@ class ProductDetail extends React.Component{
                         </div>
                             :
                             <div className="row mt-3">
-                            <input type="button" className ="btn border-secondary col-md-2" value="Add to Wishlist"/>
-                            <input type="button" className ="btn btn-danger col-md-3" value="Beli Sekarang"/>
-                            <input type="button" className ="btn btn-primary col-md-3" value="Add to Cart" onClick={this.addToCart}/>
+                            <input type="button" className ="btn btn-outline-secondary col-md-2" value="Add to Wishlist"/>
+                            <input type="button" className ="btn btn-outline-danger col-md-3" value="Beli Sekarang"/>
+                            <input type="button" className ="btn btn-outline-primary col-md-3" value="Add to Cart" onClick={this.addToCart}/>
                         </div>
                         }
                         {/* <div className="row mt-3">

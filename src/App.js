@@ -13,6 +13,7 @@ import Cart from './components/Cart'
 import Kategori from './components/kategori'
 import Footer from './components/footer'
 import History from './components/history'
+import ProductByKat from './components/productByKategori'
 
 import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -47,6 +48,7 @@ class App extends Component {
             <Route path='/manage' component={ManageProduct} exact/>
             <Route path='/cart' component={Cart} exact/>
             <Route path='/kategori' component={Kategori} exact/>
+            <Route path='/productbykat/:tipekat' component={ProductByKat} exact/>
             <Route path='/history' component={History} exact/>
             <Route path='/productdetail/:id' component={ProductDetail} exact/>
             <Route path='*' component={PageNotFound} exact/>

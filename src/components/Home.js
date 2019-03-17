@@ -135,7 +135,9 @@ class Home extends React.Component{
                         {this.renderProduct()}
                         </div> */}
                         <Flash/>
+                        <hr/>
                         <Kategori/>
+                        <hr/>
                         <Product/>
                         <div>
                             {/* Tes: */}
